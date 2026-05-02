@@ -1,7 +1,6 @@
 # Build artifacts
 target/
 **/*.rs.bk
-Cargo.lock
 
 # Node
 node_modules/
@@ -76,5 +75,8 @@ coverage/
 
 # Misc
 *.bak
+*.bak-*
 *.orig
 .history/
+scratch/
+.secrets/

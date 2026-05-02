@@ -1,30 +1,27 @@
 # Workflows
 
-Three workflows live here. Only one runs in v0.1.0.
+Three workflows live here. All three run as of v0.1.1 (source-import PR).
 
-## Active
+## `ci.yml`
+Builds and tests the Rust binary on every push and pull request to `main`:
 
-### `secret-scan.yml`
-Trufflehog full-filesystem scan on every push and PR. Runs immediately on
-the first commit because we use a full scan instead of a diff scan
-(see comments inside the file for why).
+- `cargo build --release` (default features, includes `dashboard`)
+- `cargo build --release --no-default-features` (sanity check the minimal profile)
+- `cargo test`
+- `cargo clippy -- -D warnings`
 
-## Disabled until source import (PR #1)
+A second job syntax-checks each `workspace/tools/*.js` file with `node --check`.
 
-### `ci.yml.disabled`
-Builds and tests the Rust binary plus syntax-checks the Node tools.
-**Disabled** because the `wormhole/src/` tree in this skeleton is empty —
-there is no `Cargo.toml` and no source. The first PR after this skeleton
-goes live imports the actual source from the maintainer's local tree.
-At that point, rename this file to `ci.yml` to re-enable.
+## `release.yml`
+On `v*` tag pushes, builds the unsigned `wormhole.exe`, computes a SHA256
+checksum, packages a zip with `README.md` + `LICENSE` + `NOTICE` + `PRIVACY.md`,
+and attaches both to a GitHub Release. The body is read from `CHANGELOG.md`.
 
-### `release.yml.disabled`
-Builds the unsigned `wormhole.exe` and attaches it to a GitHub Release
-when a `v*` tag is pushed. **Disabled** for the same reason as `ci.yml`.
-Rename to `release.yml` after source import. Tag `v0.1.0` once green.
+Commented placeholders mark where Authenticode signing and Ed25519 manifest
+signing slot in once their respective keys are provisioned in GitHub Secrets.
+See BUILD-GUIDE-v2.3 Section 9 for the rationale.
 
-## Why disable instead of delete?
-
-Keeps the templates visible while reading the repo, makes the source-import
-PR a one-line rename per workflow, and avoids "workflow failed" emails on
-the very first push to a fresh repo.
+## `secret-scan.yml`
+Trufflehog full-filesystem scan on every push and PR. Uses a full scan instead
+of a diff scan so the very first commit on a fresh repo gets covered too —
+see comments inside the file for why.
