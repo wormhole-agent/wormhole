@@ -414,6 +414,8 @@ async fn cmd_ask(
                 model_override: model_override.as_deref(),
                 extra_system: "",
                 allow_tools: true,
+                max_iterations_override: None,
+                auto_retry_on_cap: false,
             },
         )
         .await?;

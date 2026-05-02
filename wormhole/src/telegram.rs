@@ -313,6 +313,8 @@ impl TelegramBot {
                     model_override: override_pair.model.as_deref(),
                     extra_system: "",
                     allow_tools: true,
+                    max_iterations_override: None,
+                    auto_retry_on_cap: false,
                 },
             )
             .await;

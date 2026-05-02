@@ -210,6 +210,8 @@ impl DreamingScheduler {
                     model_override: self.cfg.dreaming.light_model_id.as_deref(),
                     extra_system: "",
                     allow_tools: false,
+                    max_iterations_override: None,
+                    auto_retry_on_cap: false,
                 },
             )
             .await?;
@@ -245,6 +247,8 @@ impl DreamingScheduler {
                     model_override: self.cfg.dreaming.rem_model_id.as_deref(),
                     extra_system: "",
                     allow_tools: false,
+                    max_iterations_override: None,
+                    auto_retry_on_cap: false,
                 },
             )
             .await?;
@@ -315,6 +319,8 @@ Patterns:
                     model_override: self.cfg.dreaming.deep_model_id.as_deref(),
                     extra_system: "",
                     allow_tools: false,
+                    max_iterations_override: None,
+                    auto_retry_on_cap: false,
                 },
             )
             .await?;

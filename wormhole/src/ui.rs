@@ -676,6 +676,8 @@ async fn api_ask(
         model_override: req.model.as_deref(),
         extra_system: "",
         allow_tools: true,
+        max_iterations_override: None,
+        auto_retry_on_cap: false,
     };
     match state.brain.respond(&req.prompt, &session_id, opts).await {
         Ok(r) => Json(json!({

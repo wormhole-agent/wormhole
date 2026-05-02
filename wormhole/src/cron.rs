@@ -68,6 +68,12 @@ pub struct Job {
     /// the prompt size sane.
     #[serde(default)]
     pub context_from: Option<String>,
+    /// Per-job override for the brain's tool-loop iteration cap. When set,
+    /// replaces the global `[tools].max_iterations` for this job's invocation
+    /// only. Auto-retry on cap (50% bump, hard ceiling 60) still applies for
+    /// cron-triggered runs. Codex review #cron-iter.
+    #[serde(default)]
+    pub max_iterations: Option<u32>,
 }
 
 fn default_true() -> bool { true }
@@ -384,6 +390,8 @@ async fn run_one(ctx: CronContext, job: Job) {
                         model_override: resolved_model.as_deref(),
                         extra_system: "",
                         allow_tools: true,
+                        max_iterations_override: job.max_iterations,
+                        auto_retry_on_cap: true,
                     },
                 )
                 .await

@@ -7,6 +7,12 @@ use std::collections::BTreeMap;
 use std::path::{Path, PathBuf};
 use std::{env, fs};
 
+/// Absolute upper bound for the brain's tool-loop iteration cap. Even when a
+/// per-job `max_iterations` is set higher, or auto-retry bumps the effective
+/// cap, the loop never runs more than this many iterations. Keeps a runaway
+/// cron from burning unbounded provider quota.
+pub const MAX_ITERATIONS_HARD_CEILING: u32 = 60;
+
 #[derive(Debug, Clone)]
 pub struct ProviderCfg {
     pub name: String,

@@ -1,6 +1,6 @@
 //! Brain: builds context, calls providers (with optional tool loop), persists transcript.
 
-use crate::config::Config;
+use crate::config::{Config, MAX_ITERATIONS_HARD_CEILING};
 use crate::error::{LarryError, Result};
 use crate::memory::{append_daily, build_system_prompt};
 use crate::providers::{
@@ -50,6 +50,16 @@ pub struct RespondOpts<'a> {
     /// (UI, telegram, cron prompt jobs) sets `true`; the flag exists so a
     /// future caller can opt out without changing the brain's signature.
     pub allow_tools: bool,
+    /// Override the global tool-loop iteration cap for this call. `None` =
+    /// use ToolConfig.max_iterations. Per-job knob plumbed through from
+    /// cron.toml's `[[job]] max_iterations`.
+    pub max_iterations_override: Option<u32>,
+    /// When the tool loop hits its iteration cap and this flag is true, the
+    /// brain auto-retries once with a 50% larger cap (clamped to
+    /// `MAX_ITERATIONS_HARD_CEILING`). Cron jobs set this; interactive
+    /// Telegram/CLI sessions leave it false so the human can decide whether
+    /// to keep going.
+    pub auto_retry_on_cap: bool,
 }
 
 impl Brain {
@@ -279,7 +289,16 @@ impl Brain {
             .as_ref()
             .ok_or_else(|| LarryError::Permanent("tool loop: tools disabled".into()))?
             .clone();
-        let max_iter = tools_reg.max_iterations();
+        let global_max = tools_reg.max_iterations();
+        // Per-job override from cron.toml's `[[job]] max_iterations`. Clamped
+        // to the hard ceiling so a typo can't run away with provider budget.
+        let initial_max: u32 = opts
+            .max_iterations_override
+            .unwrap_or(global_max)
+            .min(MAX_ITERATIONS_HARD_CEILING);
+        let mut max_iter: u32 = initial_max;
+        let mut retried = false;
+        let mut iter: u32 = 0;
         let loop_native = prov.supports_tools();
         let loop_system: &str = if loop_native {
             &base_system
@@ -288,7 +307,33 @@ impl Brain {
         };
         let loop_tools = if loop_native { tool_defs.as_deref() } else { None };
 
-        for iter in 1..=max_iter {
+        let hit_cap = loop {
+            iter += 1;
+            if iter > max_iter {
+                // Out of iterations. Cron callers get one auto-retry with a
+                // 50% larger cap (clamped to MAX_ITERATIONS_HARD_CEILING).
+                // Interactive sessions fall through to the partial-response
+                // path so the human can decide whether to push on.
+                if opts.auto_retry_on_cap && !retried {
+                    let bumped = ((max_iter as u64) * 3 / 2)
+                        .min(MAX_ITERATIONS_HARD_CEILING as u64) as u32;
+                    if bumped > max_iter {
+                        tracing::warn!(
+                            session = %session_id,
+                            previous_max = max_iter,
+                            new_max = bumped,
+                            "tool loop hit cap on cron run; auto-retrying with higher cap",
+                        );
+                        max_iter = bumped;
+                        retried = true;
+                        // Note: don't reset `iter` — we keep going from where
+                        // we were, so the conversation context is preserved.
+                        continue;
+                    }
+                }
+                break true;
+            }
+
             // Append assistant message with the original block list (text + tool_use).
             messages.push(ChatMessage::assistant_blocks(result.blocks.clone()));
 
@@ -360,13 +405,15 @@ impl Brain {
             }
 
             tracing::info!(iter, "tool loop iteration {iter}/{max_iter}");
-        }
+        };
 
-        // Exceeded iteration cap. Finalize what we have with a warning suffix.
-        let warn = format!(
-            "\n\n[larry: tool loop hit max_iterations={max_iter}; returning partial response]"
-        );
-        result.text.push_str(&warn);
+        if hit_cap {
+            let suffix = if retried { " (after retry)" } else { "" };
+            let warn = format!(
+                "\n\n[wormhole: tool loop hit max_iterations={max_iter}{suffix}; returning partial response]"
+            );
+            result.text.push_str(&warn);
+        }
         self.finalize_turn(session_id, user_text, &result, opts.source)
             .await;
         Ok(result)
