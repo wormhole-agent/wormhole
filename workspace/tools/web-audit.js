@@ -1,6 +1,6 @@
+#!/usr/bin/env node
 // Shipped with WormHole v0.1.0. See workspace/tools/TOOLS.md for usage.
 //
-#!/usr/bin/env node
 /**
  * web-audit.js - Audit a static site or repo for SEO + ADA + AI-friendly compliance.
  *

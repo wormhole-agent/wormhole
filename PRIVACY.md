@@ -41,7 +41,7 @@ In other words: the project does not collect anything; you may, through your con
 
 ## What to do if you find something that violates this
 
-This is an Apache-2.0 OSS project. If you find a code path that sends data off-machine without an explicit user action, file a public bug AND email `security@wormhole-agent.dev`. The release CI's telemetry grep is the safety net; if it ever misses something, that is a release-blocking bug.
+This is an Apache-2.0 OSS project. If you find a code path that sends data off-machine without an explicit user action, file a private GitHub Security Advisory at `https://github.com/wormhole-agent/wormhole/security/advisories/new`. The release CI's telemetry grep is the safety net; if it ever misses something, that is a release-blocking bug.
 
 ## What might change in the far future
 

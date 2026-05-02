@@ -11,7 +11,7 @@ Best-effort. No SLA. Single maintainer. Honest expectations below.
 
 ## Where NOT to go for help
 
-- **Email the maintainer.** We do not have a support inbox. The exception is `security@wormhole-agent.dev` for security issues only (see [`SECURITY.md`](./SECURITY.md)).
+- **Email the maintainer.** We do not have a support inbox. The exception is private GitHub Security Advisories for security issues only (see [`SECURITY.md`](./SECURITY.md)).
 - **Discord, Slack, or any chat.** None official. If you find a community Discord, it is a community Discord, not the project.
 - **DM the maintainer on social media.** Same answer.
 

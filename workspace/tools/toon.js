@@ -1,6 +1,6 @@
+#!/usr/bin/env node
 // Shipped with WormHole v0.1.0. See workspace/tools/TOOLS.md for usage.
 //
-#!/usr/bin/env node
 /**
  * TOON - Token-Oriented Object Notation
  * Compact JSON encoding for LLM tool outputs.

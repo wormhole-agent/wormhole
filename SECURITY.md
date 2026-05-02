@@ -1,28 +1,20 @@
 # Security
 
-> **Important:** Do NOT file public GitHub issues for security problems. Use one of the private channels below.
+> **Important:** Do NOT file public GitHub issues for security problems. Use the private channel below.
 
-WormHole is an early-stage, single-maintainer OSS project. The security posture below is honest, not aspirational: best-effort response, no SLA, but the channels work and reports are taken seriously.
+WormHole is an early-stage, single-maintainer OSS project. The security posture below is honest, not aspirational: best-effort response, no SLA, but the channel works and reports are taken seriously.
 
 ## How to report a security issue
 
-Pick whichever path is easier for you:
-
-### Preferred: GitHub Security Advisory
+### GitHub Security Advisory (private)
 
 1. Go to `https://github.com/wormhole-agent/wormhole/security/advisories/new`.
 2. Fill out the form. Mark severity honestly (low / medium / high / critical).
 3. The advisory is private until we publish it. We coordinate the patch with you in the same advisory.
 
-This is the fastest path. GitHub handles disclosure mechanics, CVE coordination if relevant, and gives us a private discussion thread.
+GitHub handles disclosure mechanics, CVE coordination if relevant, and gives us a private discussion thread. This is the only supported reporting channel for v0.1.0.
 
-### Fallback: email
-
-Email `security@wormhole-agent.dev`.
-
-> **Note for v0.1.0:** the email address above is a placeholder until the `wormhole-agent.dev` domain is registered and a real mailbox is wired. Until then, the GitHub Security Advisory path is the only working channel. The maintainer's todo list has the domain registration as a public-launch prerequisite.
-
-If you can encrypt, our PGP key will be published in this file once the email is live.
+A dedicated `security@` mailbox may be added in a future release; until it is, do not send security reports to any other email or social channel — they will be missed.
 
 ## What is in scope
 
@@ -45,7 +37,7 @@ If you can encrypt, our PGP key will be published in this file once the email is
 - **Acknowledgement** within 7 days of report.
 - **Initial triage** within 14 days.
 - **Patch or remediation plan** as fast as is honest. Single-maintainer; some weeks are slow. We will not lie about timelines.
-- **Coordinated disclosure.** If you give us a reasonable window before publicizing, we will use it well. If we are not making progress, escalate (bump the advisory, send another email).
+- **Coordinated disclosure.** If you give us a reasonable window before publicizing, we will use it well. If we are not making progress, escalate (bump the advisory).
 - **Credit.** If you want it, you get a named line in the security advisory and in `CREDITS.md` Tier 3.
 
 ## What we ask from you

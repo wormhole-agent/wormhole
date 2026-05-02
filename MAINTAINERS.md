@@ -4,8 +4,6 @@ The people responsible for the project. v0.1.0 is single-maintainer. As the proj
 
 ## Project lead
 
-**TODO before public push:** insert real name, GitHub handle, and primary contact. The Phase 1 build left this as a placeholder.
-
 - Name: Simon L. Paige
 - GitHub: `@simonlpaige`
 - Areas: everything (single maintainer)
@@ -14,7 +12,7 @@ The people responsible for the project. v0.1.0 is single-maintainer. As the proj
 
 ## Code of Conduct enforcement
 
-The project lead is the Code of Conduct point of contact until additional maintainers are added. Reports go to the same channel as security: `security@wormhole-agent.dev` (placeholder; see [`SECURITY.md`](./SECURITY.md)) or via a GitHub Security Advisory if the report is sensitive.
+The project lead is the Code of Conduct point of contact until additional maintainers are added. Reports go through a private GitHub Security Advisory (see [`SECURITY.md`](./SECURITY.md)) — same private channel as security reports, since the audience and confidentiality requirements are the same.
 
 When a second maintainer joins, this section names two contacts so reports about one maintainer can go to the other.
 
