@@ -1,0 +1,48 @@
+name: Feature request
+description: Propose a new feature or a change to existing behavior.
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for proposing something. The questions below help us decide
+        whether the change fits the project and how to scope it.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this solve?
+      description: Describe the real use case. What were you trying to do that the current behavior makes hard?
+      placeholder: "When I have 50 cron jobs, the dashboard widget grid is unreadable..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: shape
+    attributes:
+      label: Proposed shape
+      description: How would you like it to work? CLI flags, config, dashboard panel, etc.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: What other approaches did you think about? Why do you prefer this one?
+
+  - type: checkboxes
+    id: scope
+    attributes:
+      label: Scope flags (be honest)
+      options:
+        - label: This adds a new dependency.
+        - label: This adds an outbound network call.
+        - label: This changes user-facing default behavior.
+        - label: This requires a migration of existing user state.
+
+  - type: textarea
+    id: extra
+    attributes:
+      label: Anything else
+      description: Links, prior art, related issues.

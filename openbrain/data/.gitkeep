@@ -1,0 +1,5 @@
+# keep-empty
+#
+# Cron jobs write JSON snapshots into this directory at runtime.
+# The repo ships zero data here; user state stays per-user.
+# .gitignore excludes data/*.json so accidental commits don't track them.

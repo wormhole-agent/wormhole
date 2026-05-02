@@ -1,0 +1,31 @@
+# USER.md
+
+> Who the agent is talking to. Loaded every session. Keep it short and specific.
+>
+> Template ships with WormHole; `wormhole init` copies it to `USER.md` on first run.
+
+## Name
+
+(your name)
+
+## What you do
+
+(one or two sentences; e.g. "I build small AI tools and run a one-person SaaS.")
+
+## How you like to work
+
+(one paragraph; e.g. "Concise. Opinions welcome. Tell me what's wrong with my idea before you build it. Lists over essays.")
+
+## Things the agent should know about you
+
+- (preferences, constraints, things you care about)
+- (timezone, working hours if relevant)
+- (anything personal you want the agent to remember without asking)
+
+## Things the agent should NEVER do
+
+- (any hard limits: don't post to my Twitter, don't email my client list, don't touch the production database, etc.)
+
+---
+
+End of template. Edit freely. The agent reads this every session.

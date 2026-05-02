@@ -1,0 +1,8 @@
+# keep-empty
+#
+# Skills baked into the binary or shipped at the binary level (as opposed to
+# workspace-level skills, which live in ../../workspace/skills/).
+#
+# Phase 1 ships zero binary-level skills here. The source migration PR may
+# move the `find_or_build_capability` and `humanizer` skills into here from
+# the workspace; that's a Phase 1.x decision, not a v0.1.0 blocker.

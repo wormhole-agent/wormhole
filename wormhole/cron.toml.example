@@ -1,0 +1,21 @@
+# wormhole/cron.toml.example
+#
+# Top-level cron jobs. Schema: every job has an id, a schedule (cron expression),
+# a kind (the runner type), and a payload (the runner-specific config).
+#
+# Per-area jobs live in cron.d/*.toml. Both files are read on boot.
+#
+# This file ships with an empty job list; add your own. The example-module
+# under workspace/modules/ has a sample job entry.
+
+[cron]
+default_timezone = "UTC"
+
+# Example commented entry:
+#
+# [[jobs]]
+# id       = "daily-summary"
+# schedule = "0 6 * * *"     # 06:00 daily, default_timezone
+# kind     = "shell"
+# payload  = { command = "node workspace/tools/compact-session.js sessions/today.jsonl" }
+# enabled  = true

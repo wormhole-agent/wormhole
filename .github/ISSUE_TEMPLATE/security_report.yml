@@ -1,0 +1,26 @@
+name: Security report (please do NOT use this form)
+description: This issue type is here to catch reporters who landed in the wrong place. Real security reports go through SECURITY.md.
+labels: ["wrong-place"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        # Stop. Do not file a public issue for security.
+
+        Public security issues let attackers see the bug before users can patch.
+        Use one of the **private** channels in [`SECURITY.md`](../SECURITY.md):
+
+        - **GitHub Security Advisory:** https://github.com/wormhole-agent/wormhole/security/advisories/new
+        - **Email:** see SECURITY.md for the current address.
+
+        If you accidentally land here, close this form. We will not engage on
+        security material in public issues; we will redirect you to the private
+        channel and triage from there.
+
+  - type: checkboxes
+    id: ack
+    attributes:
+      label: I understand this is the wrong place for security reports.
+      options:
+        - label: Yes, I am closing this and using SECURITY.md.
+          required: true

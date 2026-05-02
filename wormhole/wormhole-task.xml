@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-16"?>
+<!--
+  wormhole-task.xml
+  Scheduled Task definition for the WormHole watchdog.
+  Renamed from larry-task.xml as part of Lock 3 (2026-05-02).
+
+  Register with:
+    schtasks /Create /TN "WormHole" /XML wormhole-task.xml
+
+  Or in PowerShell as the user:
+    Register-ScheduledTask -Xml (Get-Content wormhole-task.xml -Raw) -TaskName "WormHole"
+
+  This is a per-user scheduled task; no admin required. Phase 2 MSI will
+  register a per-machine task at install-time as part of the wizard.
+-->
+<Task version="1.4" xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+  <RegistrationInfo>
+    <Description>WormHole agent watchdog: keeps wormhole.exe running.</Description>
+  </RegistrationInfo>
+  <Triggers>
+    <LogonTrigger>
+      <Enabled>true</Enabled>
+    </LogonTrigger>
+  </Triggers>
+  <Principals>
+    <Principal id="Author">
+      <LogonType>InteractiveToken</LogonType>
+      <RunLevel>LeastPrivilege</RunLevel>
+    </Principal>
+  </Principals>
+  <Settings>
+    <MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>
+    <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+    <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+    <AllowHardTerminate>true</AllowHardTerminate>
+    <StartWhenAvailable>true</StartWhenAvailable>
+    <RestartOnFailure>
+      <Interval>PT1M</Interval>
+      <Count>9999</Count>
+    </RestartOnFailure>
+    <Hidden>false</Hidden>
+  </Settings>
+  <Actions Context="Author">
+    <Exec>
+      <Command>powershell.exe</Command>
+      <Arguments>-ExecutionPolicy Bypass -File "%USERPROFILE%\wormhole\watchdog.ps1"</Arguments>
+    </Exec>
+  </Actions>
+</Task>

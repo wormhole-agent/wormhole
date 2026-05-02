@@ -1,0 +1,65 @@
+name: Bug report
+description: Something is broken or behaving unexpectedly.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for filing a bug report. The more concrete you can be about
+        what you ran and what happened, the faster we can fix it.
+
+        **Security issues do not go here.** Use the private channel in
+        [`SECURITY.md`](../SECURITY.md).
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Describe the behavior. What did you expect, what did you see instead?
+      placeholder: "I ran `wormhole serve` and the dashboard at 127.0.0.1:18790 returned 500..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      description: Minimum steps to reproduce the bug.
+      placeholder: |
+        1. `git clone ...`
+        2. `cargo build --release`
+        3. `./target/release/wormhole serve`
+        4. Open `http://127.0.0.1:18790/`
+    validations:
+      required: true
+
+  - type: textarea
+    id: doctor
+    attributes:
+      label: Output of `wormhole doctor`
+      description: Paste the output of `wormhole doctor` (no `--online` flag needed unless the bug is provider-related).
+      render: shell
+
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Output of `wormhole --version`.
+      placeholder: "0.1.0"
+    validations:
+      required: true
+
+  - type: input
+    id: os
+    attributes:
+      label: OS
+      description: e.g. "Windows 11 23H2".
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant logs
+      description: Recent lines from `~/wormhole/logs/wormhole.log`. Redact anything sensitive.
+      render: shell

@@ -1,0 +1,20 @@
+# LEDGER.md
+
+> Open-loop tracker for this module. One row per loop. Close loops by moving them under "Closed" with a date and outcome.
+
+## Open
+
+| Opened | What | Owner | Check by | Status |
+|---|---|---|---|---|
+| 2026-05-02 | Decide whether the example module survives the first PR after publish | maintainer | 2026-05-09 | open |
+
+## Closed
+
+| Opened | Closed | What | Outcome |
+|---|---|---|---|
+| | | | |
+
+## Notes
+
+- Loops past their `Check by` date should bubble up in the next heartbeat or daily summary.
+- Closed loops with surprising outcomes (`[surprise]` in daily memory) are good candidates for promotion to `MEMORY.md` Lessons.

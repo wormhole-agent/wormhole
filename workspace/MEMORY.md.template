@@ -1,0 +1,31 @@
+# MEMORY.md
+
+> Long-term memory. Curated. The dreaming pass proposes additions; you accept them. Loaded once per session.
+>
+> This is the template that ships with WormHole. On first run, copy it to `MEMORY.md` (`wormhole init` does this) and fill in over time. Keep entries short. If a section grows past 30 lines, that section probably wants to become a module's `CONTEXT.md` instead.
+
+## User profile
+
+(One paragraph about you, written by you or with the agent's help. The agent reads this every session to anchor who it is talking to.)
+
+## Local AI stack
+
+- LLM providers configured: (filled by `wormhole init` from `config.toml`)
+- Local models available via Ollama: (run `ollama list` and paste; the agent updates this from time to time)
+- Vault status: (status from `wormhole vault status`)
+
+## Lessons (durable knowledge)
+
+- (Promotions from daily memory land here. The dreaming pass writes proposals to `MEMORY-proposed.md`; you move them here when you accept.)
+
+## Watchlist (things to keep an eye on)
+
+- (Open loops, hypotheses to test, half-formed ideas. Short entries.)
+
+## Project notes (cross-module)
+
+- (Anything that does not fit a single module. If a project gets its own module, the project notes move to `modules/<name>/CONTEXT.md`.)
+
+---
+
+End of template. The dreaming pass at 03:00 reads recent daily memory files and proposes additions; you review proposals at `MEMORY-proposed.md` and move accepted entries here.

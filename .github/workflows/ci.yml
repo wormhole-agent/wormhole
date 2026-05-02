@@ -1,0 +1,67 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  rust:
+    name: Rust build + test + clippy
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy
+
+      - name: Cache cargo
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            wormhole/target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('wormhole/Cargo.toml') }}
+
+      - name: Build (default features)
+        working-directory: wormhole
+        run: cargo build --release
+
+      - name: Build (no default features, minimal profile sanity check)
+        working-directory: wormhole
+        run: cargo build --release --no-default-features
+
+      - name: Test
+        working-directory: wormhole
+        run: cargo test
+
+      - name: Clippy
+        working-directory: wormhole
+        run: cargo clippy -- -D warnings
+
+  workspace_tools:
+    name: Workspace tools (Node syntax sanity)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install workspace tool deps
+        working-directory: workspace
+        run: npm install --no-audit --no-fund
+
+      - name: Syntax check shipping tools
+        working-directory: workspace
+        run: |
+          for f in tools/*.js; do
+            echo "Checking $f"
+            node --check "$f"
+          done

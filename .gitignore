@@ -1,0 +1,80 @@
+# Build artifacts
+target/
+**/*.rs.bk
+Cargo.lock
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Runtime state (per-user, never in git)
+.token
+.token.*
+secrets.md
+secrets.md.enc
+secrets.export.age
+*.key
+*.pem
+config.toml
+cron.toml
+cron-state.json
+sessions/
+logs/
+*.log
+
+# Workspace runtime files
+workspace/MEMORY.md
+workspace/USER.md
+workspace/memory/*.md
+!workspace/memory/README.md
+workspace/memory/.dreams/
+workspace/.dreams/
+workspace/state/
+workspace/_archive/
+workspace/_scratch/
+workspace/_tmp/
+workspace/_trash/
+workspace/staging/
+workspace/tmp/
+
+# Dashboard runtime data (cron jobs write here)
+openbrain/data/*.json
+!openbrain/data/.gitkeep
+
+# Build script output
+build/credits-tier1-rust.md
+build/credits-tier1-node.json
+build/scrub-template.report.txt
+
+# Test scratch
+tmp-test-*.txt
+tmp-*.json
+*-test.tmp
+
+# Env
+.env
+.env.local
+.env.*.local
+
+# Coverage
+coverage/
+*.lcov
+
+# Misc
+*.bak
+*.orig
+.history/

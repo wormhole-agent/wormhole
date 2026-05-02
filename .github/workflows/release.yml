@@ -1,0 +1,70 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build_and_release:
+    name: Build unsigned binary, attach to release
+    runs-on: windows-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Build release
+        working-directory: wormhole
+        run: cargo build --release
+
+      - name: Compute checksums
+        shell: pwsh
+        run: |
+          $hash = (Get-FileHash -Algorithm SHA256 wormhole/target/release/wormhole.exe).Hash
+          "wormhole.exe  SHA256: $hash" | Out-File -FilePath wormhole-${{ github.ref_name }}-windows-x64.sha256 -Encoding ascii
+
+      - name: Package zip
+        shell: pwsh
+        run: |
+          $zip = "wormhole-${{ github.ref_name }}-windows-x64.zip"
+          Compress-Archive -Path wormhole/target/release/wormhole.exe, README.md, LICENSE, NOTICE, PRIVACY.md -DestinationPath $zip
+
+      # PHASE 2 PLACEHOLDER:
+      # Authenticode sign the binary here once an OV/EV cert lands in
+      # GitHub Secrets. v0.1.0 ships unsigned; SmartScreen click-through is
+      # documented in README.md. See v2.3.2-CERT-DEFERRED.md for the rationale.
+      #
+      # Example (DO NOT enable until cert is provisioned):
+      # - name: Sign Authenticode
+      #   shell: pwsh
+      #   env:
+      #     CERT_BASE64: ${{ secrets.WORMHOLE_CODESIGN_CERT_BASE64 }}
+      #     CERT_PASS: ${{ secrets.WORMHOLE_CODESIGN_CERT_PASS }}
+      #   run: |
+      #     ...
+
+      # PHASE 1 (CURRENT): Ed25519-sign the release manifest with the offline
+      # release key. The signed manifest is what gates `wormhole self-update`,
+      # not Authenticode. See BUILD-GUIDE-v2.3 Section 9.
+      # The signing key is held offline by the maintainer and is added to
+      # GitHub Secrets only at release time. The line below is the placeholder.
+      # - name: Sign release manifest (Ed25519)
+      #   shell: pwsh
+      #   env:
+      #     ED25519_PRIV: ${{ secrets.WORMHOLE_RELEASE_ED25519_PRIV }}
+      #   run: pwsh ./build/sign-release-manifest.ps1
+
+      - name: Upload artifacts to GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            wormhole-${{ github.ref_name }}-windows-x64.zip
+            wormhole-${{ github.ref_name }}-windows-x64.sha256
+          body_path: CHANGELOG.md
+          draft: false
+          prerelease: false

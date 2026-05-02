@@ -1,0 +1,17 @@
+{
+  "name": "wormhole-workspace-tools",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Top 10 tools shipped with WormHole v0.1.0. Each tool is short, single-purpose, readable. The agent picks them up via the skill loader. New tools land here over time.",
+  "license": "Apache-2.0",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "for f in tools/*.js; do node --check \"$f\" || exit 1; done"
+  },
+  "dependencies": {
+    "node-fetch": "^3.3.2"
+  },
+  "comment": "Most of the ten shipped tools use Node 20 built-ins (fetch, fs/promises, child_process). node-fetch is here for tools that target older Node versions or environments without global fetch. yt-transcript.js shells out to yt-dlp, which the user installs separately."
+}

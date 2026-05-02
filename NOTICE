@@ -1,0 +1,33 @@
+WormHole
+Copyright 2026 The WormHole Authors
+
+This product includes software developed by the WormHole project
+(https://github.com/wormhole-agent/wormhole).
+
+Licensed under the Apache License, Version 2.0 (the "License");
+see LICENSE in this distribution for the full text. You may obtain
+a copy of the License at:
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+---
+
+This NOTICE file is required by Apache-2.0 (Section 4d). It is the
+legal artifact that captures attribution from upstream Apache-2.0
+dependencies. CREDITS.md (in this distribution) is the human-readable
+companion that lists every dependency and every named inspiration in
+three tiers; the project keeps NOTICE and CREDITS.md in sync at every
+release.
+
+---
+
+Third-party attributions for shipped Apache-2.0 dependencies will be
+generated at release time from `Cargo.lock` and `package.json` by the
+build pipeline (see `build/credits-tier1.js` once Phase 1 lands the
+auto-generation script). Until then, the per-dependency NOTICE entries
+live in CREDITS.md.
+
+If you redistribute WormHole, you must include this NOTICE file with
+your distribution per Apache-2.0 Section 4d. You may add your own
+attribution notices alongside this file but you may not modify or
+remove the entries above.

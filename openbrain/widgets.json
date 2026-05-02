@@ -1,0 +1,30 @@
+{
+  "$schema": "WIDGET-CONTRACT.md",
+  "_comment": "Default widgets shipped with v0.1.0. Cron jobs drop the JSON files referenced by `url` into ./data/. Edit freely; restart not required (the dashboard re-reads on refresh).",
+  "widgets": [
+    {
+      "id": "agent-status",
+      "title": "Agent status",
+      "kind": "feed",
+      "url": "data/agent-status.json",
+      "refresh_s": 5,
+      "produced_by": "wormhole binary, /api/status; the dashboard fetches this directly, no cron needed"
+    },
+    {
+      "id": "cron-runs",
+      "title": "Recent cron runs",
+      "kind": "feed",
+      "url": "data/cron-runs.json",
+      "refresh_s": 15,
+      "produced_by": "wormhole binary, /api/cron/runs"
+    },
+    {
+      "id": "memory-map",
+      "title": "Memory map",
+      "kind": "memory-map",
+      "url": "data/memory-map.json",
+      "refresh_s": 60,
+      "produced_by": "cron job in workspace; ships as a stub. Replace with your own."
+    }
+  ]
+}

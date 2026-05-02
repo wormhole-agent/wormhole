@@ -1,0 +1,11 @@
+{
+  "_comment": "Agent runtimes the dashboard knows how to talk to. Each node MUST expose GET /api/status. The token loaded into the dashboard's auth header gates every /api/* request.",
+  "nodes": [
+    {
+      "id": "local",
+      "name": "Local Wormhole",
+      "url": "http://127.0.0.1:18790",
+      "default": true
+    }
+  ]
+}

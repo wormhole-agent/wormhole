@@ -1,0 +1,5 @@
+# keep-empty
+#
+# Drop your per-area cron job files here. One TOML file per logical area
+# (e.g. `cron.d/dashboard-refresh.toml`, `cron.d/dreaming.toml`).
+# The schema is the same as `cron.toml`. Files are merged at boot.
